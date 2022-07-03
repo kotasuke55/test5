@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <todo-ttl></todo-ttl>
+    <label>タスク名:<input type="text" name="task" v-model="task"></label>
+    <label>推定時間(分):<input type="number" name="time" v-model="time"></label>
+    <br />
+    <button @click="addTodo">追加</button>
+    <table>
+      <tr>
+        <th><todo-todo :todo-todo="taskth"></todo-todo></th>
+        <th>推定時間(分)</th>
+      </tr>
+      <tr v-for="todo in todos">
+        <td>{{todo.task}}</td>
+        <td>{{todo.time}}分</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    Vue.component('todo-ttl',{
+      template:'<h1>Todoアプリ</h1>'
+    })
+    Vue.component('todo-todo',{
+      props:{
+        TodoTodo:{
+          type:String
+        }
+      },
+      template:'<p>{{TodoTodo}}</p>'
+    })
+    new Vue ({
+      el:'#app',
+      data:{
+        taskth:'タスク',
+        task:'',
+        time:'60',
+        todos:[],
+      },
+      methods:{
+        addTodo:function(){
+          if(this.task=='' || this.time==''){
+            return;
+          } 
+          let todo = {
+            task:this.task,
+            time:this.time
+          }
+          this.todos.push(todo);
+          this.task='';
+          this.time='60';
+          
+        }
+      }
+    })
+  </script>
+</body>
+</html>
